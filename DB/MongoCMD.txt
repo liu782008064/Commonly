@@ -1,0 +1,91 @@
+
+redis-server.exe  redis.windows.conf  启动服务端 redis-server
+
+redis-cli.exe 启动客户端
+
+redis-server --service-install redis.windows.conf --loglevel verbose    add windows services
+
+----------------------------------------------------------------------------------------------------
+
+mongod.exe --logpath d:/websoft/mongodb/logs --logappend --dbpath d:/websoft/mongodb/data --directoryperdb --serviceName MongoDB -install  add windows services
+
+1.启动服务
+
+mongod --dbpath 数据存取位置
+
+2.远程连接
+
+var x=new Mongo("192.168.0.72/27017")
+var ydb=x.getDB("BedsOnline")
+use udb
+
+3.选择数据库
+
+use 数据库名
+
+4.查询
+
+db.集合.find()
+
+db.集合.findone()
+
+db.test.find({'name':'foobar'}) <==> select * from test where name='foobar'
+
+db.test.find() <==> select * from test
+
+
+db.test.find({'ID':10}).count() <==> select count(*) from test where ID=10
+
+
+db.test.find().skip(10).limit(20) <==> select * from test limit 10,20
+
+
+db.test.find({'ID':{$in:[25,35,45]}}) <==> select * from test where ID in (25,35,45)
+
+
+db.test.find().sort({'ID':-1}) <==> select * from test order by ID desc
+
+
+db.test.distinct('name',{'ID':{$lt:20}}) <==> select distinct(name) from test where ID<20
+
+
+db.test.group({key:{'name':true},cond:{'name':'foo'},reduce:function(obj,prev){prev.msum+=obj.marks;},initial:{msum:0}}) <==> select name,sum(marks) from test group by name
+
+
+db.test.find('this.ID<20',{name:1}) <==> select name from test where ID<20
+
+
+db.test.insert({'name':'foobar','age':25})<==>insert into test ('name','age') values('foobar',25)
+
+db.test.remove({}) <==> delete * from test
+
+
+db.test.remove({'age':20}) <==> delete test where age=20
+
+
+db.test.remove({'age':{$lt:20}}) <==> elete test where age<20
+
+
+db.test.remove({'age':{$lte:20}}) <==> delete test where age<=20
+
+
+db.test.remove({'age':{$gt:20}}) <==> delete test where age>20
+
+
+db.test.remove({'age':{$gte:20}}) <==> delete test where age>=20
+
+
+db.test.remove({'age':{$ne:20}}) <==> delete test where age!=20
+
+
+db.test.update({'name':'foobar'},{$set:{'age':36}}) <==> update test set age=36 where name='foobar'
+
+
+db.test.update({'name':'foobar'},{$inc:{'age':3}}) <==> update test set age=age+3 where
+
+name='foobar'
+
+5.统计
+
+db.集合.count()
+

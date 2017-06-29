@@ -1,0 +1,69 @@
+﻿    public static class jsonConvert
+    {
+        /// <summary>
+        /// 把Object序列化成json
+        /// </summary>
+        /// <param name="jsonObject"></param>
+        /// <returns></returns>
+        public static string SerializeByObject(object jsonObject)
+        {
+            using (var ms = new MemoryStream())
+            {
+                new DataContractJsonSerializer(jsonObject.GetType()).WriteObject(ms, jsonObject);
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// 把Datatable序列化成json
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static string SerializeByTable(DataTable dt)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                foreach (DataColumn dc in dt.Columns)
+                {
+
+                    result.Add(dc.ColumnName, dr[dc].ToString());
+                }
+                list.Add(result);
+            }
+            return serializer.Serialize(list);
+        }
+
+        /// <summary>
+        /// 将JSON反序列化成Object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonStr"></param>
+        /// <returns></returns>
+        public static T parse<T>(string jsonStr)
+        {
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonStr)))
+            {
+                return (T)new DataContractJsonSerializer(typeof(T)).ReadObject(ms);
+            }
+        }
+
+        //使用方法
+        //Dictionary<string, object> result = new Dictionary<string, object>();
+        //反序列化对象
+        //JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //string jsondata = "";
+        //StreamReader reader = new StreamReader(System.Web.HttpContext.Current.Request.InputStream, Encoding.UTF8);
+        //jsondata = reader.ReadToEnd();
+        //jsondata = System.Web.HttpContext.Current.Server.UrlDecode(jsondata);
+        //var requestModel = JsonDeserialize<ClientRequestData>(jsondata.Trim().Replace("\r\n", ""));
+        //result.Add("result", true);
+        //result.Add("notice", "操作成功");
+        //result.Add("userid", model.UserID);
+        //result.Add("username", model.UserName);
+        //string serialize = serializer.Serialize(result);
+        //return Content(serialize);
+
+    }

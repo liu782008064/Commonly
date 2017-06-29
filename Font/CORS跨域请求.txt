@@ -1,0 +1,27 @@
+
+1.程序方式
+
+	添加请求头部： 
+	Access-Control-Allow-Origin:*
+	接口方法添加响应头：
+	Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+2.服务器方式
+
+	配置文件添加：
+	 <system.webServer>
+		<httpProtocol>
+		  <customHeaders>
+			<add name="Access-Control-Allow-Origin" value="*" />
+		  </customHeaders>
+		</httpProtocol>
+	 </system.webServer>
+
+3.谷歌浏览器配置方式
+  
+   目标：C:\MyChromeDevUserData，--user-data-dir
+   
+4.方向代理
+   
+
+注：上线基本采用同域机制

@@ -1,0 +1,44 @@
+1.提交表单容量配置
+<system.web>
+    <httpRuntime maxRequestLength="1048576" executionTimeout="3600" />
+</system.web>
+2.appSettings设置
+    <appSettings>
+        <add key="Account" value="305756"/>
+    </appSettings>
+    string strAccount = System.Configuration.ConfigurationSettings.AppSettings["Account"];
+3.connectionStrings设置
+    <connectionStrings>
+        <add name="ConStr" connectionString="uid=sa;password=zhangshangtong;database=GAT;server=." providerName="System.Data.SqlClient"/>
+    </connectionStrings>
+    string strCon = System.Configuration.ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString;
+4.sessionState设置
+    <sessionState mode="InProc" cookieless="false" timeout="20" />
+    在这个例子中，mode属性设为InProc（默认值），表明会话状态要由ASP.NET存储到内存中，而且 不用Cookie来传递会话ID。相反，
+	会话ID要直接插入一个网页URL的查询字符串中。例如，采用 InProc模式并建立一个会话之后，调用一个假想的ASP.NET网页时，需要采用下面这样的URL：
+	
+	mode="Off"  禁用会话状态
+	
+	mode="StateServer" 也就是将会话数据存储到单独的内存缓冲区中，再由单独一台机器上运行的Windows服务来控制这个缓冲区。
+	状态服务全称是“ASP.NET State Service ”（aspnet_state.exe），
+    它由Web.config文件中的stateConnectionString属性来配置。该属性指定了服务所在的服务器，以及要监视的端口：
+	<sessionState mode="StateServer"     stateConnectionString="tcpip=myserver:42424"     cookieless="false" timeout="20" />  
+	在这个例子中，状态服务在一台名为myserver的机器的42424端口（默认端口）运行。要在服务器上改变
+	端口，可编辑HKLM\SYSTEM\CurrentControlSet\Services\aspnet_state注册表项中的Port值。
+	显然，使用状态服务的优点在于进程隔离，并可在Web farm中共享。 使用这种模式，会话状态的存储将不
+	依赖于iis进程的失败或者重启，然而，一旦状态服务中止，所有会话数据都会丢失。换言之，状态服务不
+	像SQL Server那样能持久存储数据；它只是将数据存储在内存中。
+	
+	mode="SqlServer" 数据存储到一个数据库服务器中,由于数据不存
+	储在本地内存，所以存储会话状态的对象需要进行序列化和反序列化，以便通过网络传给数据库服务器，
+	以及从数据库服务器传回。这当然会影响性能。通过在数据库中存储会话状态，可分别针对扩展性及可靠
+	性来有效地平衡性能。另外，可以利用SQL Server的集群，使状态存储不依赖于单个的SQL Server， 这样就可以为应用程序提供极大限度的可靠性。
+	
+5.httpRuntime设置
+	<httpRuntime maxRequestLength="4096"    默认值4MB，1KB=1024单位kb  支持的最大文件上载大小
+	useFullyQualifiedRedirectUrl="true"     重定向是否是完全限定的 http://server/path 格式
+	executionTimeout="6000"                 表示允许执行请求的最大时间限制，单位为s
+	minFreeThreads="8" 						表示指定允许执行新请求的自由线程的最小数目 默认值为 8
+	minLocalRequestFreeThreads="4" 			执行新本地请求的自由线程的最小数目
+	appRequestQueueLimit="100" 				应用程序排队的请求的最大数目
+	enableVersionHeader="true"/>			是否应输出版本标头

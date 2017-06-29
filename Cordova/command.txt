@@ -1,0 +1,52 @@
+
+// -g 代表全局安装
+
+安装Node.js
+
+npm install -g cordova/phonegap  安装cordova/phonegap
+
+cordova/phonegap -version   检查版本
+
+cordova create hello com.example.hello "HelloWorld"   创建cordova项目
+
+cd hello
+
+cordova platform add android/ios   添加平台
+
+cordova build  
+
+/*************************************************************/
+phonegap create Dome 
+
+cd Dome
+ 
+phonegap build Android 
+
+/*************************************************************/
+
+npm install -g ionic  安装ionic   
+
+ionic -version
+
+ionic start myApp tabs  创建新项目
+
+cd myApp 
+
+ionic serve  浏览器调试
+
+ionic platform add android/ios  添加平台
+
+ionic plugin add/remove ‘plugin name’
+
+ionic bulid andriod/ios  
+
+ionic emulate android/ios 模拟器运行
+
+ionic run android/ios  链接手机运行
+
+/*************************************************************/
+
+angularJs 下载
+1. http://www.bootcdn.cn/angular.js/
+
+2. npm install -g angular

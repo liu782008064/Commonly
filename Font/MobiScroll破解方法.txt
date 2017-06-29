@@ -1,0 +1,43 @@
+官网下载地址： http://www.mobiscroll.com/（支持定制下载）
+
+
+破解说明
+把*._processItem = new Function("$, p", function () {
+...
+...
+...
+return b;
+}
+此方法为加密js代码转换
+以日期组件为例，b的值就是
+try {
+    //x.mobiscroll.running控制弹出层是否可用滑动
+    $.mobiscroll.running = new Date() < new Date(2015, 4, 28) || !(!$.mobiscroll.active ? $.mobiscroll.active = !alert('Trial expired! Please Upgrade Account.') : 1);
+    return (Math.random() < p ? '<div style="' + function (e) {
+        var t = e.length, n, r;
+        while (0 !== t) {
+            r = Math.floor(Math.random() * t);
+            t -= 1;
+            n = e[t];
+            e[t] = e[r];
+            e[r] = n
+        }
+        return e
+    }(['position:absolute', 'top:0', 'left:0', 'bottom:0', 'right:0', 'font-size:8px', 'line-height:12px', 'text-align:center', 'opacity:' + (Math.floor(Math.random() * 20) / 100 + 0.8)]).join(';') + '">TRIAL</div>' : '')
+} catch (e) {
+    return ''
+}
+
+修改biscroll.custom-x.xx.x.min.js 文件
+1，把b相关字符串替换 
+
+b= b.replace("TRIAL",""); 等价于 _processItem(a,0.x) 替换成 _processItem(a,0)      //去掉测试字样 
+b= b.replace("alert('Trial expired! Please Upgrade Account.')",false);  //去掉过期时弹出提示！
+return b
+
+查找"return b" 前面插入
+b= b.replace("TRIAL",""); 
+b= b.replace("alert('Trial expired! Please Upgrade Account.')",false);
+2，全文替换"a.mobiscroll.running"为true   //屏蔽过期，导致插件无法使用
+后续版本 x.running 
+ 

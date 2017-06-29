@@ -1,0 +1,32 @@
+
+1.跳转盘符
+  cd /d d:
+2.跳转路径
+  cd D:\Software\node\nodejs
+3.检查连接
+  ping 121.23.34.53 80
+4.远程登陆命令
+  telnet
+5.检测本机端口网络状况
+  netstat
+6.doc-shutdown操作
+  shutdown -s -t 0/关机   shutdown /r /t 0/重启 
+7.打开常用工具
+  notepad/文本  mspaint/画图  calc/计算器
+8.Net命令停止IIS服务
+  net stop iisadmin /y
+9.Net命令启动IIS服务
+  net start iisadmin 
+10.IIS重启
+  iisreset 
+11.打开IIS服务管理器
+  inetmgr
+12.打开注册表
+  regedit
+13.打开服务
+  services.msc
+14.查看端口，锁定进程 杀掉进程
+netstat -ano                  //查看所有端口占用情况
+netstat -aon|findstr "9050"   //查看指定端口的占用情况 
+tasklist|findstr "2016"       //查看PID对应的进程
+taskkill /f /t /im tor.exe    //结束该进程 
